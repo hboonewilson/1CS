@@ -112,3 +112,24 @@ def compareVehiclesForTrip(distanceM, veh1Name, veh1SpeedMPH, veh1MPG, veh2Name,
     print(f"{distanceM} miles in vehicle '{veh1Name}' will cost ${total1}, including:\n${round((hotel_nights1 * hotelCostPerNight), 2)} for {hotel_nights1} hotel night(s), ${gas1} for gas, ${food1} for food (including {lunches1} lunch)") 
     
     print(f"{distanceM} miles in vehicle '{veh2Name}' will cost ${total2}, including:\n${round((hotel_nights2 * hotelCostPerNight), 2)} for {hotel_nights2} hotel night(s), ${gas2} for gas, ${food2} for food (including {lunches2} lunch)") 
+    
+def testQ1():
+    '''make at least five calls to tripCostAndInfo with different arguments'''
+    a,b,c,d,e = tripCostAndInfo(1000.0, 33.33, 9.408, 3.0, 5.0, 7.0, 8.0, 20.0)
+    print('Call 1:', a,b,c,d,e)
+    a,b,c,d,e = tripCostAndInfo(1050.0, 34.33, 9.408, 4.0, 5.0, 7.0, 8.0, 20.0)
+    print('Call 2', a,b,c,d,e)
+    a,b,c,d,e = tripCostAndInfo(2000.0, 33.33, 9.408, 3.0, 5.0, 7.0, 8.0, 20.0)
+    print('Call 3',a,b,c,d,e)
+    a,b,c,d,e = tripCostAndInfo(1000.0, 33.33, 10.4, 3.0, 5.0, 7.0, 8.0, 60.5)
+    print('Call 4', a,b,c,d,e)
+    a,b,c,d,e = tripCostAndInfo(1000.0, 32.33, 9.408, 2.0, 4.0, 7.0, 8.0, 27.0)
+    print('Call 5', a,b,c,d,e)    
+    
+def testQ2():
+    '''make at least five calls to compareVehiclesForTrip with different arguments'''
+    (compareVehiclesForTrip(1000, 'ford', 45.0, 30.0, 'chevy', 60.0, 25.0, 3.0, 4.0, 5.0, 7.0, 25.0))
+    (compareVehiclesForTrip(1000, 'chevy', 75.0, 35.0, 'tesla', 100.0, 1.0, 4.0, 4.0, 5.0, 7.0, 30.0))
+    (compareVehiclesForTrip(1000, 'ford', 45.0, 30.0, 'chevy', 60.0, 25.0, 3.0, 4.0, 5.0, 7.0, 25.0))
+    (compareVehiclesForTrip(1000, 'honda', 64.0, 40.0, 'toyota', 77.0, 44.0, 3.0, 4.0, 8.0, 7.0, 25.0))
+    (compareVehiclesForTrip(1000, 'audi', 120.0, 25.0, 'bmw', 110.0, 25.0, 3.0, 4.0, 8.0, 7.0, 45.0))
