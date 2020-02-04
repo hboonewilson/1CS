@@ -129,7 +129,11 @@ def testQ1():
 def testQ2():
     '''make at least five calls to compareVehiclesForTrip with different arguments'''
     (compareVehiclesForTrip(1000, 'ford', 45.0, 30.0, 'chevy', 60.0, 25.0, 3.0, 4.0, 5.0, 7.0, 25.0))
+    print()
     (compareVehiclesForTrip(1000, 'chevy', 75.0, 35.0, 'tesla', 100.0, 1.0, 4.0, 4.0, 5.0, 7.0, 30.0))
+    print()
     (compareVehiclesForTrip(1000, 'ford', 45.0, 30.0, 'chevy', 60.0, 25.0, 3.0, 4.0, 5.0, 7.0, 25.0))
+    print()
     (compareVehiclesForTrip(1000, 'honda', 64.0, 40.0, 'toyota', 77.0, 44.0, 3.0, 4.0, 8.0, 7.0, 25.0))
+    print()
     (compareVehiclesForTrip(1000, 'audi', 120.0, 25.0, 'bmw', 110.0, 25.0, 3.0, 4.0, 8.0, 7.0, 45.0))
