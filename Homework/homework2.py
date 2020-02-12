@@ -88,4 +88,89 @@ def q2(inputString, minLetter):
     return first_small, first_s_index, third, thindex, largestlet, maxtimes
             
     
+def q3a(string1, string2):
+    '''Implement function q3a(string1, string2) so that it returns True if the input strings are the same length and differ at exactly one character position, and returns False otherwise. For example, q3a("bat", "bet") should return True while q3a("art", "rat") and q3a("art", "ran") should both return False.'''
+    difindex = 0
+    if len(string1) != len(string2):
+        return False
+    x = 0
+    while x < len(string1):
+        if string1[x] != string2[x]:
+            difindex += 1
+        x += 1
+    if difindex == 1:
+        return True
+    else:
+        return False 
+
+def q3b(string1, string2):
+    ''' Implement function q3b(string1, string2) so that it returns a list of the indices, in increasing order, at which string1 and string2 have identical characters. That is, index i should be in the returned list if the ith character of string1 and string2 are the same. For example, q3b("cba", "cb") should return [0, 1] and q3b("bbcz", "Bbxzf") should return [1, 3].'''
+    retlis = []
+    x = 0
+    if string1 == '' or string2 == '':
+        return [None]
+    if len(string1) < len(string2):
+        smallerstr = len(string1)
+    else:
+        smallerstr = len(string2)
+    while x < smallerstr:
+        if string1[x] == string2[x]:
+            retlis += [x]
+        x += 1
+    return retlis
+
+def q4(L, goalX, goalY):
+    ''' Implement function, q4(L, goalX, goalY), that takes a non-empty list, L, of [x,y] pairs, and two goal numbers, and returns tuple (closestXY, XorY) where closestXY is the item from L whose x distance from goal X or whose y distance from goalY is the minimum among all distances, and XorY is 'x' if x distance is minimized and 'y' otherwise. You may assume there is a unique answer. Note: You may not use built-in min or max functions. q4([[4, 4], [10, 10]], 1, 8) should return ([10,10], 'y')'''
+    minimum = None
+    xory = None
+    thelis = None
+    for lis in L:
+
+        xdis = goalX - lis[0]
+        ydis = goalY - lis[1]
+        if xdis < 0:
+            xdis = xdis * -1
+        if ydis < 0:
+            ydis = ydis * -1
+        if ydis < xdis:
+            smalldis = ydis
+            xissmal = False
+        else:
+            smalldis = xdis
+            xissmal = True
+
+        if minimum == None or minimum > smalldis:
+            minimum = smalldis
+            thelis = lis
+            if xissmal:
+                xory = 'x'
+            else:
+                xory = 'y'
+    return thelis, xory
+            
+def q5(L):
+    '''Implement function q5(L) that takes as input a (possibly empty) list of (possibly empty) lists of numbers and returns a three-element list. The first element is a list of the sums of corresponding lists in L, the second element is the number of lists in L that contain more positive than negative values, and the third element in the minimum value among all items in all lists (or None if there is no minimum). Note: you may NOT use Python's 'sum' or 'min' function (instead,compute sums and min within a loop or loops.) >>> q5([[1, 2, 2], [3]]) == [[5, 3], 2, 1] >>> q5([[0, 1, 0], [], [-1, 100]]) == [[1, 0, 99], 1, -1]'''
+    #if L == []:
+        #return None, None, None
+    poslists = 0
+    sumlis = []
+    smallest = None
+    for lis in L:
+        posi = 0
+        neg = 0
+        ans = 0
+        for element in lis:
+            if smallest == None or smallest > element:
+                smallest = element
+            ans += element
+            if element < 0:
+                neg += 1
+            elif element > 0:
+                posi += 1
+        sumlis += [ans]
+        if posi > neg:
+            poslists += 1
+    return sumlis, poslists, smallest
+    
+        
     
