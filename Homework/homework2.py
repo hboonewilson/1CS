@@ -25,9 +25,31 @@ def modifyString(origString, charsToReplace, count):
 #letter occurs. The third smallest letter must be distinct from the second smallest 
 #which must be distinct from the smallest. E.g. 'b' is the second smallest and 'c' 
 #is the third smallest in 'ababdc'
-def q2(inputString, minLetter):
+'''Make sure that the code is robust enough to evaluate if input string is empty 
+or if there is no more letters larger than minLetter.'''
+def checkForLet(letter, string):
+    '''Helper function that returns how many times a ch is in a string.'''
+    count = 0
+    for char in string:
+        if char == letter:
+            count += 1
+    return count
+
+def q2(inputString, minLetter): 
+    inputString = inputString.lower()
     
-                
+    if inputString == '':
+        return None, None, None, None, None, None
+    
+    largestlet = None
+    maxtimes = None
+    for char in inputString:
+        timeschar = checkForLet(char, inputString)
+        if largestlet == None or maxtimes < timeschar:
+            maxtimes = timeschar
+            largestlet = char    
+    
+    #first smallest
     winner = None
     index = 0
     winning_in = None
@@ -40,31 +62,30 @@ def q2(inputString, minLetter):
         index += 1
     first_small = winner
     first_s_index = winning_in
-    if first_small == None:
-        return (None, None, None, None)
+    
+    
+    
     #find second smallest
     #second smallest doesn't need index just it's value
     sec_sm = None
     index = 0
     for let in inputString:
-        if let > first_small:
+        if first_small != None and let > first_small:
             if sec_sm == None or sec_sm > let:
                 sec_sm = let
-    if sec_sm == None:
-        return (first_small, first_s_index, None, None)
-    
-    
+      
     third = None
     thindex = None
     index = 0
     #find third smallest ch
     while index < len(inputString):
         let = inputString[index]
-        if let > sec_sm:
+        if sec_sm != None and let > sec_sm:
             if third == None or let < third:
                 third = let
                 thindex = index
         index += 1
-    return (first_small, first_s_index, third, thindex)
+    return first_small, first_s_index, third, thindex, largestlet, maxtimes
             
+    
     
