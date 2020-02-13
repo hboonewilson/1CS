@@ -25,8 +25,6 @@ def modifyString(origString, charsToReplace, count):
 #letter occurs. The third smallest letter must be distinct from the second smallest 
 #which must be distinct from the smallest. E.g. 'b' is the second smallest and 'c' 
 #is the third smallest in 'ababdc'
-'''Make sure that the code is robust enough to evaluate if input string is empty 
-or if there is no more letters larger than minLetter.'''
 def checkForLet(letter, string):
     '''Helper function that returns how many times a ch is in a string.'''
     count = 0
@@ -38,14 +36,20 @@ def checkForLet(letter, string):
 def q2(inputString, minLetter): 
     inputString = inputString.lower()
     
-    if inputString == '':
-        return None, None, None, None, None, None
     
+    #find the leter tha occurs most frequently with the helper function checkForLet()
     largestlet = None
     maxtimes = None
     for char in inputString:
+        
+        #for each character in the string use checkForLet to return how many times
+        #that character was present in a string 
         timeschar = checkForLet(char, inputString)
+        
+        #if there is no largest letter yet or the higest frequency letter 
+        #is smallert than new frequency
         if largestlet == None or maxtimes < timeschar:
+            #reset the top variables
             maxtimes = timeschar
             largestlet = char    
     
@@ -55,11 +59,13 @@ def q2(inputString, minLetter):
     winning_in = None
     while index < len(inputString):
         let = inputString[index]
-        if let > minLetter:
+        if let >= minLetter:
             if winner == None or let < winner:
                 winner = let
                 winning_in = index
         index += 1
+        
+    #change names of variables to understand them later
     first_small = winner
     first_s_index = winning_in
     
@@ -107,8 +113,6 @@ def q3b(string1, string2):
     ''' Implement function q3b(string1, string2) so that it returns a list of the indices, in increasing order, at which string1 and string2 have identical characters. That is, index i should be in the returned list if the ith character of string1 and string2 are the same. For example, q3b("cba", "cb") should return [0, 1] and q3b("bbcz", "Bbxzf") should return [1, 3].'''
     retlis = []
     x = 0
-    if string1 == '' or string2 == '':
-        return [None]
     if len(string1) < len(string2):
         smallerstr = len(string1)
     else:
@@ -150,8 +154,6 @@ def q4(L, goalX, goalY):
             
 def q5(L):
     '''Implement function q5(L) that takes as input a (possibly empty) list of (possibly empty) lists of numbers and returns a three-element list. The first element is a list of the sums of corresponding lists in L, the second element is the number of lists in L that contain more positive than negative values, and the third element in the minimum value among all items in all lists (or None if there is no minimum). Note: you may NOT use Python's 'sum' or 'min' function (instead,compute sums and min within a loop or loops.) >>> q5([[1, 2, 2], [3]]) == [[5, 3], 2, 1] >>> q5([[0, 1, 0], [], [-1, 100]]) == [[1, 0, 99], 1, -1]'''
-    #if L == []:
-        #return None, None, None
     poslists = 0
     sumlis = []
     smallest = None
