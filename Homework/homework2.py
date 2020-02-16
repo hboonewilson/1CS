@@ -6,16 +6,11 @@
 def modifyString(origString, charsToReplace, count):
     retstr = ''
     for let in origString:
-        replace = False
-        for ch in charsToReplace:
-            if let == ch:
-                replace = True
-        if replace:
-            let = let * count
-        
-        retstr += let
-            
-    return  retstr
+        if let.lower() in charsToReplace.lower():
+            retstr += (let * count)
+        else:
+            retstr += let
+    return retstr
 
 #Write a function, q2(inputString, minLetter), that takes as input a string of 
 #letters and returns six things: the lexicographically smallest letter (z/Z > y/Y > ... > a/A) 
@@ -39,7 +34,7 @@ def q2(inputString, minLetter):
     
     #find the leter tha occurs most frequently with the helper function checkForLet()
     largestlet = None
-    maxtimes = None
+    maxtimes = 0
     for char in inputString:
         
         #for each character in the string use checkForLet to return how many times
@@ -52,7 +47,11 @@ def q2(inputString, minLetter):
             #reset the top variables
             maxtimes = timeschar
             largestlet = char    
-    
+        if timeschar == maxtimes:
+            if largestlet > char:
+                maxtimes = timeschar
+                largestlet = char
+
     #first smallest
     winner = None
     index = 0
@@ -173,6 +172,3 @@ def q5(L):
         if posi > neg:
             poslists += 1
     return sumlis, poslists, smallest
-    
-        
-    
