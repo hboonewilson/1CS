@@ -95,7 +95,7 @@ def analyzeTexts(filename, minWordLengthToConsider = 1):
     print(f"Total words in Spam: {totalwordsspam}")
     print()
     print("12 Most common words in Ham:")
-    for i in range(0, 12≠±):
+    for i in range(0, 12):
         frequency = hamtups[i][1] / totalwordsham
         frequency = round(frequency, 2)
         print(f"{i+1}. Word: '{hamtups[i][0]}' Count: {hamtups[i][1]} Frequency:{frequency}%")
