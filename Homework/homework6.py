@@ -33,15 +33,36 @@ class Box:
     def volume(self):
         return self.height * self.width * self.depth
     def surfaceArea(self):
-        return width * height * 4
+        xByY = self.height * self.width
+        xByZ = self.depth * self.width
+        zByY = self.depth * self.height
+        return xByY * 2 + xByZ * 2 + zByY * 2
     def __repr__(self):
-        return (f'<Box with center at ({self.centerX},{self.centerY}) with width of {self.width} height of {self.height} and depth of {self.depth}.>')
-    
-    '''Help!'''
+        return (f'<Box with center at ({self.centerX},{self.centerY},{self.centerZ}) with width of {self.width} height of {self.height} and depth of {self.depth}.>')
     def overlaps(self, otherBox):
-        pass
+        centerX1 = self.centerX
+        centerY1 = self.centerY
+        centerZ1 = self.centerZ  
+        centerX2 = otherBox.centerX
+        centerY2 = otherBox.centerY
+        centerZ2 = otherBox.centerZ
+        if abs(centerX1 - centerX2) > (self.width/2 + otherBox.width/2):
+            return False
+        elif abs(centerY1 - centerY2) > (self.height/2 + otherBox.height/2):
+            return False
+        elif abs(centerZ1 - centerZ2) > (self.depth/2 + otherBox.depth/2):
+            return False
+        else:
+            return True
     def isInside(self, otherBox):
-        pass
+        if self.centerX + self.width/2 >= otherBox.centerX + otherBox.width/2 or self.centerX - self.width/2 <= otherBox.centerX - otherBox.width/2:
+            return False
+        elif self.centerY + self.height/2 >= otherBox.centerY + otherBox.height/2 or self.centerY - self.height/2 <= otherBox.centerY - otherBox.height/2:
+            return False
+        elif self.centerZ + self.depth/2 >= otherBox.centerZ + otherBox.depth/2 or self.centerZ - self.depth/2 <= otherBox.centerZ - otherBox.depth/2:
+            return False
+        else:
+            return True
 
 
 '''
@@ -53,7 +74,69 @@ an __init__ method, with one argument, a list specifying the number of balls in 
 a __repr__ method that will print a nice human readable representation of the game state.
 a remove method, with two arguments specifying how many balls the human player wishes to remove and the heap from which to remove them. This method should check that the specified number of balls and specified heap are valid. If the input is not valid, print an appropriate message but do not modify the game state. If the input is valid, remove the balls, and check whether or not the game is over/the player has won. If the game is not over, the method should then automatically select a (legal) number of balls for the computer to remove from some heap, either randomly or through a "smart" strategy, and it should update the game state accordingly (and check whether the game is over/computer has won). Note: you might want to add an additional internally-used method, gameOver, that returns True or False based on the current game state.
 '''
+import random 
+class NimGame:
+    def __init__(self, heapList = [1,3,5,7]):
+        self.heapList = heapList
+    def __repr__(self):
+        h1 = self.heapList[0] * '0 '
+        h2 = self.heapList[1] * '0 '
+        h3 = self.heapList[2] * '0 '
+        h4 = self.heapList[3] * '0 '
+        return f'Heap1:\t{h1}  \nHeap2:\t{h2} \nHeap3:\t{h3} \nHeap4:\t{h4}'
 
+    def gameOver(self):
+        gameGoing = True
+        oneInHeap = 0
+        zeroInHeap = 0
+        for i in range(0,4):
+            if self.heapList[i] == 1:
+                oneInHeap += 1
+            if self.heapList[i] == 0:
+                zeroInHeap += 1
+        if oneInHeap == 1 and zeroInHeap == 3:
+            gameGoing = False
+        return gameGoing
+
+    def computerRemove(self):
+        foundStack = False
+        while not foundStack:
+            randomStackindex = random.randint(0, 3)
+            randomStack = self.heapList[randomStackindex]
+            if randomStack != 0:
+                randomRemove = random.randint(1, randomStack)
+                foundStack = True
+        self.heapList[randomStackindex] = randomStack - randomRemove
+        print(f'Computer removed {randomRemove} ball(s) from heap {randomStackindex + 1}')
+        
+    def remove(self, howMany, whichStack):
+        if self.heapList[whichStack-1] >= howMany:
+            self.heapList[whichStack-1] = self.heapList[whichStack-1] - howMany
+            print(f'Removed {howMany} from stack {whichStack}.')
+        else:
+            print("There are not enough balls to remove from that stack.")
+            return
+        zeroHeaps = 0
+        for i in range(0,4):
+            if self.heapList[i] == 0:
+                zeroHeaps += 1
+        if zeroHeaps == 4:
+            print('You took the last ball(s). You loose.')
+            return
+        gameState = self.gameOver()
+        if gameState == False:
+            print('There is one ball left. You win!')
+            return
+        self.computerRemove()
+        zeroHeaps = 0
+        for i in range(0,4):
+            if self.heapList[i] == 0:
+                zeroHeaps += 1
+        if zeroHeaps == 4:
+            print('The computer took the last ball(s). You win!')
+        gameState = self.gameOver()
+        if gameState == False:
+            print('There is only one ball left. You have lost.')
 
 '''
 3. Add one additional subclass of Animal, including at least one new method, to
