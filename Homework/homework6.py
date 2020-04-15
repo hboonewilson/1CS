@@ -76,51 +76,52 @@ a remove method, with two arguments specifying how many balls the human player w
 '''
 import random 
 class NimGame:
-    def __init__(self, heapList = [1,3,5,7]):
+    def __init__(self, heapList):
         self.heapList = heapList
     def __repr__(self):
-        h1 = self.heapList[0] * '0 '
-        h2 = self.heapList[1] * '0 '
-        h3 = self.heapList[2] * '0 '
-        h4 = self.heapList[3] * '0 '
-        return f'Heap1:\t{h1}  \nHeap2:\t{h2} \nHeap3:\t{h3} \nHeap4:\t{h4}'
-
+        retstr = ''
+        for i in range(0, len(self.heapList)):
+            heapNum = i + 1
+            ballsInHeap = self.heapList[i] * '0 '
+            retstr += f"Heap{heapNum}: {ballsInHeap}\n"
+        return retstr
     def gameOver(self):
         gameGoing = True
         oneInHeap = 0
         zeroInHeap = 0
-        for i in range(0,4):
+        for i in range(0,len(self.heapList)):
             if self.heapList[i] == 1:
                 oneInHeap += 1
             if self.heapList[i] == 0:
                 zeroInHeap += 1
-        if oneInHeap == 1 and zeroInHeap == 3:
+        if oneInHeap == 1 and zeroInHeap == len(self.heapList) - 1:
             gameGoing = False
         return gameGoing
 
     def computerRemove(self):
         foundStack = False
         while not foundStack:
-            randomStackindex = random.randint(0, 3)
+            randomStackindex = random.randint(0, len(self.heapList)-1)
             randomStack = self.heapList[randomStackindex]
             if randomStack != 0:
                 randomRemove = random.randint(1, randomStack)
                 foundStack = True
         self.heapList[randomStackindex] = randomStack - randomRemove
+        print()
         print(f'Computer removed {randomRemove} ball(s) from heap {randomStackindex + 1}')
         
     def remove(self, howMany, whichStack):
         if self.heapList[whichStack-1] >= howMany:
             self.heapList[whichStack-1] = self.heapList[whichStack-1] - howMany
-            print(f'Removed {howMany} from stack {whichStack}.')
+            print(f'You have removed {howMany} from stack {whichStack}.')
         else:
             print("There are not enough balls to remove from that stack.")
             return
         zeroHeaps = 0
-        for i in range(0,4):
+        for i in range(0,len(self.heapList)):
             if self.heapList[i] == 0:
                 zeroHeaps += 1
-        if zeroHeaps == 4:
+        if zeroHeaps == len(self.heapList):
             print('You took the last ball(s). You loose.')
             return
         gameState = self.gameOver()
@@ -129,14 +130,22 @@ class NimGame:
             return
         self.computerRemove()
         zeroHeaps = 0
-        for i in range(0,4):
+        for i in range(0,len(self.heapList)):
             if self.heapList[i] == 0:
                 zeroHeaps += 1
-        if zeroHeaps == 4:
+        if zeroHeaps == len(self.heapList):
             print('The computer took the last ball(s). You win!')
         gameState = self.gameOver()
         if gameState == False:
             print('There is only one ball left. You have lost.')
+        print()
+        print('\nCurrent game board:')
+        retstr = ''
+        for i in range(0, len(self.heapList)):
+            heapNum = i + 1
+            ballsInHeap = self.heapList[i] * '0 '
+            retstr += f"Heap{heapNum}: {ballsInHeap}\n"
+        print(retstr)
 
 '''
 3. Add one additional subclass of Animal, including at least one new method, to
