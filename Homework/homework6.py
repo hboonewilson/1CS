@@ -84,6 +84,12 @@ class NimGame:
             heapNum = i + 1
             ballsInHeap = self.heapList[i] * '0 '
             retstr += f"Heap{heapNum}: {ballsInHeap}\n"
+    def getName(self):
+        retstr = ''
+        for i in range(0, len(self.heapList)):
+            heapNum = i + 1
+            ballsInHeap = self.heapList[i] * '0 '
+            retstr += f"Heap{heapNum}: {ballsInHeap}\n"
         return retstr
     def gameOver(self):
         gameGoing = True
